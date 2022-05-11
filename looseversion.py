@@ -176,9 +176,8 @@ class LooseVersion:
         return "LooseVersion ('%s')" % str(self)
 
     def _cmp(self, other):
-        if isinstance(other, str):
-            other = LooseVersion(other)
-        elif not isinstance(other, LooseVersion):
+        other = self._coerce(other)
+        if other is NotImplemented:
             return NotImplemented
 
         if self.version == other.version:
@@ -187,3 +186,19 @@ class LooseVersion:
             return -1
         if self.version > other.version:
             return 1
+
+    @staticmethod
+    def _coerce(other):
+        if isinstance(other, LooseVersion):
+            return other
+        elif isinstance(other, str):
+            return LooseVersion(other)
+        elif "distutils" in sys.modules:
+            # Using this check to avoid importing distutils and suppressing the warning
+            try:
+                from distutils.version import LooseVersion as deprecated
+            except ImportError:
+                return NotImplemented
+            if isinstance(other, deprecated):
+                return LooseVersion(str(other))
+        return NotImplemented
