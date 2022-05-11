@@ -1,0 +1,5 @@
+2022.05.11 - Import from CPython (last modified 662db125cddbca1db68116c547c290eb3943d98e)
+           - Remove Version base class and StrictVersion
+           - Style with black
+           - Add non-importing check for distutils.version.LooseVersion to maintain
+             compatibility
