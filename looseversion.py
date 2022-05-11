@@ -1,4 +1,4 @@
-#
+
 # distutils/version.py
 #
 # Implements multiple version numbering conventions for the
