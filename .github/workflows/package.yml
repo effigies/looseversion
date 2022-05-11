@@ -1,0 +1,26 @@
+name: build-test-deploy
+
+on:
+  push: {branches: [main]}
+  pull_request: {branches: [main]}
+  schedule:
+    - cron: '0 0 * * MON'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.10"]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python }}
+    - name: Install dev tools
+      run: pip install --upgrade pip build twine
+    - name: Build package
+      run: python -m build
+    - name: Check package metadata
+      run: twine check dist/*
