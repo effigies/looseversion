@@ -1,7 +1,9 @@
 name: build-test-deploy
 
 on:
-  push: {branches: [main]}
+  push:
+    branches: [main]
+    tags: ["*"]
   pull_request: {branches: [main]}
   schedule:
     - cron: '0 0 * * MON'
