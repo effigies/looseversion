@@ -1,3 +1,4 @@
+import sys
 import warnings
 
 import pytest
@@ -56,3 +57,7 @@ def test_cmp(v1, v2, result):
     assert loosev2._cmp(v1) == -result
     assert loosev1._cmp(object()) == NotImplemented
     assert loosev2._cmp(object()) == NotImplemented
+
+
+if __name__ == '__main__':
+    sys.exit(pytest.main([__file__] + sys.argv[1:]))
