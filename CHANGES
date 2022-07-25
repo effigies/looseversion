@@ -1,3 +1,5 @@
+2022.05.24 - Add __main__ section to tests to enable `python tests.py`
+2022.05.16 - Add tests.py in sdist
 2022.05.11 - Import from CPython (last modified 662db125cddbca1db68116c547c290eb3943d98e)
            - Remove Version base class and StrictVersion
            - Style with black
