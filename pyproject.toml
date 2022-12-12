@@ -8,7 +8,7 @@ maintainers = [{name = "Chris Markiewicz", email = "effigies@gmail.com"}]
 version = "1.0.3.dev0"
 description = "Version numbering for anarchists and software realists"
 readme = "README.md"
-license = {text = "PSF-2.0"}
+license = {file = "LICENSE"}
 classifiers = [
     "Programming Language :: Python :: 3",
     "Development Status :: 6 - Mature",
@@ -16,3 +16,6 @@ classifiers = [
 ]
 urls = {Homepage = "https://github.com/effigies/looseversion"}
 requires-python = ">=3"
+
+[tool.flit.sdist]
+include = ["tests.py", "tox.ini", "CHANGES"]
