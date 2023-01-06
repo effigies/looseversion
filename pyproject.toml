@@ -5,7 +5,7 @@ build-backend = "flit_core.buildapi"
 [project]
 name = "looseversion"
 maintainers = [{name = "Chris Markiewicz", email = "effigies@gmail.com"}]
-version = "1.0.3"
+version = "1.1.0.dev0"
 description = "Version numbering for anarchists and software realists"
 readme = "README.md"
 license = {file = "LICENSE"}
