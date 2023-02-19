@@ -18,4 +18,4 @@ urls = {Homepage = "https://github.com/effigies/looseversion"}
 requires-python = ">=3"
 
 [tool.flit.sdist]
-include = ["tests.py", "tox.ini", "CHANGES"]
+include = ["tests.py", "tests.pyi", "tox.ini", "CHANGES"]

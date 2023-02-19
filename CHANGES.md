@@ -2,6 +2,10 @@
 
 ## Releases
 
+### 1.1.0 (Upcoming)
+
+2023.02.19 - Add type annotations and stubs.
+
 ### 1.0.3 (5 Jan 2023)
 
 Re-release to ensure tests are bundled in sdist.
