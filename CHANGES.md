@@ -2,6 +2,11 @@
 
 ## Releases
 
+### 1.1.1 (19 Feb 2023)
+
+- 2023.02.19
+  - Restructure package so stubs get installed and detected
+
 ### 1.1.0 (19 Feb 2023)
 
 - 2023.02.19
