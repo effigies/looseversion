@@ -1,11 +1,11 @@
 [build-system]
-requires = ["flit_core >=3.2,<4"]
-build-backend = "flit_core.buildapi"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "looseversion"
 maintainers = [{name = "Chris Markiewicz", email = "effigies@gmail.com"}]
-version = "1.1.0"
+version = "1.1.1.dev0"
 description = "Version numbering for anarchists and software realists"
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -17,5 +17,8 @@ classifiers = [
 urls = {Homepage = "https://github.com/effigies/looseversion"}
 requires-python = ">=3"
 
-[tool.flit.sdist]
-include = ["tests.py", "tests.pyi", "tox.ini", "CHANGES"]
+[tool.hatch.build]
+exclude = [".github"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/looseversion"]
