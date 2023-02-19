@@ -16,10 +16,10 @@ Every version number class implements the following interface:
     of the same class or a string (which will be parsed to an instance
     of the same class, thus must follow the same rules)
 """
+from __future__ import annotations
 
-import sys
 import re
-
+import sys
 
 # The rules according to Greg Stein:
 # 1) a version number has 1 or more numbers separated by a period or by
@@ -120,47 +120,51 @@ class LooseVersion:
     """
 
     component_re = re.compile(r"(\d+ | [a-z]+ | \.)", re.VERBOSE)
+    vstring: str
+    version: list[int | str]
 
-    def __init__(self, vstring=None):
+    def __init__(self, vstring: str | None = None):
         if vstring:
             self.parse(vstring)
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         c = self._cmp(other)
         if c is NotImplemented:
-            return c
+            return NotImplemented
         return c == 0
 
-    def __lt__(self, other):
+    def __lt__(self, other: object) -> bool:
         c = self._cmp(other)
         if c is NotImplemented:
-            return c
+            return NotImplemented
         return c < 0
 
-    def __le__(self, other):
+    def __le__(self, other: object) -> bool:
         c = self._cmp(other)
         if c is NotImplemented:
-            return c
+            return NotImplemented
         return c <= 0
 
-    def __gt__(self, other):
+    def __gt__(self, other: object) -> bool:
         c = self._cmp(other)
         if c is NotImplemented:
-            return c
+            return NotImplemented
         return c > 0
 
-    def __ge__(self, other):
+    def __ge__(self, other: object) -> bool:
         c = self._cmp(other)
         if c is NotImplemented:
-            return c
+            return NotImplemented
         return c >= 0
 
-    def parse(self, vstring):
+    def parse(self, vstring: str) -> None:
         # I've given up on thinking I can reconstruct the version string
         # from the parsed tuple -- so I just store the string here for
         # use by __str__
         self.vstring = vstring
-        components = [x for x in self.component_re.split(vstring) if x and x != "."]
+        components: list[str | int] = [
+            x for x in self.component_re.split(vstring) if x != "."
+        ]
         for i, obj in enumerate(components):
             try:
                 components[i] = int(obj)
@@ -169,13 +173,13 @@ class LooseVersion:
 
         self.version = components
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.vstring
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "LooseVersion ('%s')" % str(self)
 
-    def _cmp(self, other):
+    def _cmp(self, other: object) -> int:
         other = self._coerce(other)
         if other is NotImplemented:
             return NotImplemented
@@ -186,9 +190,10 @@ class LooseVersion:
             return -1
         if self.version > other.version:
             return 1
+        return NotImplemented
 
     @staticmethod
-    def _coerce(other):
+    def _coerce(other: object) -> LooseVersion:
         if isinstance(other, LooseVersion):
             return other
         elif isinstance(other, str):
