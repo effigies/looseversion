@@ -2,6 +2,11 @@
 
 ## Releases
 
+### 1.1.2 (22 Feb 2023)
+
+- 2023.02.22
+  - Revert unintended change in internal version representation
+
 ### 1.1.1 (19 Feb 2023)
 
 - 2023.02.19
