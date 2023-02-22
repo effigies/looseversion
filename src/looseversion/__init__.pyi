@@ -2,7 +2,7 @@ from re import Pattern
 from typing import Union
 
 class LooseVersion:
-    component_re: Pattern
+    component_re: Pattern[str]
     vstring: str
     version: Union[str, int]
     def __init__(self, vstring: Union[str, None] = ...) -> None: ...

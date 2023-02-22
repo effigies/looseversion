@@ -119,7 +119,7 @@ class LooseVersion:
     of "want").
     """
 
-    component_re = re.compile(r"(\d+ | [a-z]+ | \.)", re.VERBOSE)
+    component_re: re.Pattern[str] = re.compile(r"(\d+ | [a-z]+ | \.)", re.VERBOSE)
     vstring: str
     version: list[int | str]
 
