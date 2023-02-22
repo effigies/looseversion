@@ -119,7 +119,7 @@ class LooseVersion:
     of "want").
     """
 
-    component_re = re.compile(r"(\d+ | [a-z]+ | \.)", re.VERBOSE)
+    component_re: re.Pattern[str] = re.compile(r"(\d+ | [a-z]+ | \.)", re.VERBOSE)
     vstring: str
     version: list[int | str]
 
@@ -163,7 +163,7 @@ class LooseVersion:
         # use by __str__
         self.vstring = vstring
         components: list[str | int] = [
-            x for x in self.component_re.split(vstring) if x != "."
+            x for x in self.component_re.split(vstring) if x and x != "."
         ]
         for i, obj in enumerate(components):
             try:

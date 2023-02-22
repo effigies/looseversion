@@ -59,5 +59,22 @@ def test_cmp(v1, v2, result):
     assert loosev2._cmp(object()) == NotImplemented
 
 
+@pytest.mark.parametrize('vstring,version',
+    [
+        ('1.5.1', [1, 5, 1]),
+        ('1.5.2b2', [1, 5, 2, 'b', 2]),
+        ('161', [161]),
+        ('3.10a', [3, 10, 'a']),
+        ('1.13++', [1, 13, '++']),
+    ],
+)
+def test_split(vstring, version):
+    # Regression test to ensure we don't accidentally break parsing (again)
+    # This can be changed if the version representation changes
+    v = lv.LooseVersion(vstring)
+    assert v.vstring == vstring
+    assert v.version == version
+
+
 if __name__ == '__main__':
     sys.exit(pytest.main([__file__] + sys.argv[1:]))
