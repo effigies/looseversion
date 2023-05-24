@@ -76,5 +76,24 @@ def test_split(vstring, version):
     assert v.version == version
 
 
+@pytest.mark.parametrize("v1,v2,result",
+    [
+        ('0.3@v0.3', '0.3.1@v0.3.1', 1),
+        ('0.3.1@v0.3.1', '0.3@v0.3', -1),
+        ('13.0-beta3', '13.0.1', 1),
+        ('13.0.1', '13.0-beta3', -1),
+    ]
+)
+def test_py2_rules(v1, v2, result):
+    """Python 2 did allow strings and numbers to be compared.
+    Verify consistent, generally unintuitive behavior.
+    """
+    loosev1 = lv.LooseVersion(v1)
+    loosev2 = lv.LooseVersion(v2)
+    assert loosev1._cmp(loosev2) == result
+    assert loosev1._cmp(v2) == result
+    assert loosev2._cmp(loosev1) == -result
+    assert loosev2._cmp(v1) == -result
+
 if __name__ == '__main__':
     sys.exit(pytest.main([__file__] + sys.argv[1:]))
