@@ -16,8 +16,6 @@ Every version number class implements the following interface:
     of the same class or a string (which will be parsed to an instance
     of the same class, thus must follow the same rules)
 """
-from __future__ import annotations
-
 import re
 import sys
 
@@ -86,8 +84,7 @@ import sys
 # have a conception that matches common notions about version numbers.
 
 
-class LooseVersion:
-
+class LooseVersion(object):
     """Version numbering for anarchists and software realists.
     Implements the standard interface for version number classes as
     described above.  A version number consists of a series of numbers,
@@ -119,52 +116,48 @@ class LooseVersion:
     of "want").
     """
 
-    component_re: re.Pattern[str] = re.compile(r"(\d+ | [a-z]+ | \.)", re.VERBOSE)
-    vstring: str
-    version: list[int | str]
+    component_re = re.compile(r"(\d+ | [a-z]+ | \.)", re.VERBOSE)
 
-    def __init__(self, vstring: str | None = None):
+    def __init__(self, vstring=None):
         if vstring:
             self.parse(vstring)
 
-    def __eq__(self, other: object) -> bool:
+    def __eq__(self, other):
         c = self._cmp(other)
         if c is NotImplemented:
             return NotImplemented
         return c == 0
 
-    def __lt__(self, other: object) -> bool:
+    def __lt__(self, other):
         c = self._cmp(other)
         if c is NotImplemented:
             return NotImplemented
         return c < 0
 
-    def __le__(self, other: object) -> bool:
+    def __le__(self, other):
         c = self._cmp(other)
         if c is NotImplemented:
             return NotImplemented
         return c <= 0
 
-    def __gt__(self, other: object) -> bool:
+    def __gt__(self, other):
         c = self._cmp(other)
         if c is NotImplemented:
             return NotImplemented
         return c > 0
 
-    def __ge__(self, other: object) -> bool:
+    def __ge__(self, other):
         c = self._cmp(other)
         if c is NotImplemented:
             return NotImplemented
         return c >= 0
 
-    def parse(self, vstring: str) -> None:
+    def parse(self, vstring):
         # I've given up on thinking I can reconstruct the version string
         # from the parsed tuple -- so I just store the string here for
         # use by __str__
         self.vstring = vstring
-        components: list[str | int] = [
-            x for x in self.component_re.split(vstring) if x and x != "."
-        ]
+        components = [x for x in self.component_re.split(vstring) if x and x != "."]
         for i, obj in enumerate(components):
             try:
                 components[i] = int(obj)
@@ -173,13 +166,13 @@ class LooseVersion:
 
         self.version = components
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.vstring
 
-    def __repr__(self) -> str:
+    def __repr__(self):
         return "LooseVersion ('%s')" % str(self)
 
-    def _cmp(self, other: object) -> int:
+    def _cmp(self, other):
         other = self._coerce(other)
         if other is NotImplemented:
             return NotImplemented
@@ -193,7 +186,7 @@ class LooseVersion:
         return NotImplemented
 
     @staticmethod
-    def _coerce(other: object) -> LooseVersion:
+    def _coerce(other):
         if isinstance(other, LooseVersion):
             return other
         elif isinstance(other, str):

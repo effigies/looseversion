@@ -15,7 +15,6 @@ classifiers = [
     "License :: OSI Approved :: Python Software Foundation License",
 ]
 urls = {Homepage = "https://github.com/effigies/looseversion"}
-requires-python = ">=3"
 
 [tool.hatch.build]
 exclude = [".github"]
