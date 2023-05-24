@@ -1,10 +1,10 @@
 from re import Pattern
-from typing import Union
+from typing import List, Union
 
 class LooseVersion:
     component_re: Pattern[str]
     vstring: str
-    version: Union[str, int]
+    version: List[Union[str, int]]
     def __init__(self, vstring: Union[str, None] = ...) -> None: ...
     def __eq__(self, other: object) -> bool: ...
     def __lt__(self, other: object) -> bool: ...
