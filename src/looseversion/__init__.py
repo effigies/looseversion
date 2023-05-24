@@ -84,6 +84,25 @@ import sys
 # have a conception that matches common notions about version numbers.
 
 
+if sys.version_info >= (3,):
+
+    class _Py2Int(int):
+        """Integer object that compares < any string"""
+
+        def __gt__(self, other):
+            if isinstance(other, str):
+                return False
+            return super().__gt__(other)
+
+        def __lt__(self, other):
+            if isinstance(other, str):
+                return True
+            return super().__lt__(other)
+
+else:
+    _Py2Int = int
+
+
 class LooseVersion(object):
     """Version numbering for anarchists and software realists.
     Implements the standard interface for version number classes as
@@ -160,7 +179,7 @@ class LooseVersion(object):
         components = [x for x in self.component_re.split(vstring) if x and x != "."]
         for i, obj in enumerate(components):
             try:
-                components[i] = int(obj)
+                components[i] = _Py2Int(obj)
             except ValueError:
                 pass
 
