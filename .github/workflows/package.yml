@@ -49,8 +49,10 @@ jobs:
       with:
         python-version: ${{ matrix.python }}
         allow-prereleases: true
+    - name: Install tox
+      run: pip install --upgrade pip tox tox-gh-actions
     - name: Test
-      run: pipx run --pip-args "tox-gh-actions" tox
+      run: tox
 
   deploy:
     needs: [build, test]
