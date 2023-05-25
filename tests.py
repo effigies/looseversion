@@ -39,15 +39,19 @@ def test_LooseVersion_compat(v1, v2):
 
 
 # Adapted from Cpython:Lib/distutils/tests/test_version.py
-@pytest.mark.parametrize("v1,v2,result",
-    [('1.5.1', '1.5.2b2', -1),
-     ('161', '3.10a', 1),
-     ('8.02', '8.02', 0),
-     ('3.4j', '1996.07.12', -1),
-     ('3.2.pl0', '3.1.1.6', 1),
-     ('2g6', '11g', -1),
-     ('0.960923', '2.2beta29', -1),
-     ('1.13++', '5.5.kw', -1)])
+@pytest.mark.parametrize(
+    "v1,v2,result",
+    [
+        ("1.5.1", "1.5.2b2", -1),
+        ("161", "3.10a", 1),
+        ("8.02", "8.02", 0),
+        ("3.4j", "1996.07.12", -1),
+        ("3.2.pl0", "3.1.1.6", 1),
+        ("2g6", "11g", -1),
+        ("0.960923", "2.2beta29", -1),
+        ("1.13++", "5.5.kw", -1),
+    ],
+)
 def test_cmp(v1, v2, result):
     loosev1 = lv.LooseVersion(v1)
     loosev2 = lv.LooseVersion(v2)
@@ -59,13 +63,14 @@ def test_cmp(v1, v2, result):
     assert loosev2._cmp(object()) == NotImplemented
 
 
-@pytest.mark.parametrize('vstring,version',
+@pytest.mark.parametrize(
+    "vstring,version",
     [
-        ('1.5.1', [1, 5, 1]),
-        ('1.5.2b2', [1, 5, 2, 'b', 2]),
-        ('161', [161]),
-        ('3.10a', [3, 10, 'a']),
-        ('1.13++', [1, 13, '++']),
+        ("1.5.1", [1, 5, 1]),
+        ("1.5.2b2", [1, 5, 2, "b", 2]),
+        ("161", [161]),
+        ("3.10a", [3, 10, "a"]),
+        ("1.13++", [1, 13, "++"]),
     ],
 )
 def test_split(vstring, version):
@@ -76,13 +81,14 @@ def test_split(vstring, version):
     assert v.version == version
 
 
-@pytest.mark.parametrize("v1,v2,result",
+@pytest.mark.parametrize(
+    "v1,v2,result",
     [
-        ('0.3@v0.3', '0.3.1@v0.3.1', 1),
-        ('0.3.1@v0.3.1', '0.3@v0.3', -1),
-        ('13.0-beta3', '13.0.1', 1),
-        ('13.0.1', '13.0-beta3', -1),
-    ]
+        ("0.3@v0.3", "0.3.1@v0.3.1", 1),
+        ("0.3.1@v0.3.1", "0.3@v0.3", -1),
+        ("13.0-beta3", "13.0.1", 1),
+        ("13.0.1", "13.0-beta3", -1),
+    ],
 )
 def test_py2_rules(v1, v2, result):
     """Python 2 did allow strings and numbers to be compared.
@@ -95,5 +101,6 @@ def test_py2_rules(v1, v2, result):
     assert loosev2._cmp(loosev1) == -result
     assert loosev2._cmp(v1) == -result
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     sys.exit(pytest.main([__file__] + sys.argv[1:]))
