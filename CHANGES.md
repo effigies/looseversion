@@ -2,6 +2,12 @@
 
 ## Releases
 
+### 1.2.0 (Unreleased)
+
+- 2023.05.25
+  - Enable installation on Python 2+
+  - Ensure consistent semantics between Python 2 and 3
+
 ### 1.1.2 (22 Feb 2023)
 
 - 2023.02.22

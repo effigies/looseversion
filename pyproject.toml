@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "looseversion"
 maintainers = [{name = "Chris Markiewicz", email = "effigies@gmail.com"}]
-version = "1.1.2"
+version = "1.2.0.dev0"
 description = "Version numbering for anarchists and software realists"
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -15,7 +15,6 @@ classifiers = [
     "License :: OSI Approved :: Python Software Foundation License",
 ]
 urls = {Homepage = "https://github.com/effigies/looseversion"}
-requires-python = ">=3"
 
 [tool.hatch.build]
 exclude = [".github"]
