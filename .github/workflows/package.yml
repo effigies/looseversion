@@ -34,13 +34,21 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: [3.7, 3.8, 3.9, "3.10", "3.11", "pypy-3.7"]
+        python:
+          - "3.7"
+          - "3.8"
+          - "3.9"
+          - "3.10"
+          - "3.11"
+          - "3.12"
+          - "pypy-3.7"
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python }}
+        allow-prereleases: true
     - name: Test
       run: pipx run --pip-args "tox-gh-actions" tox
 
