@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "looseversion"
 maintainers = [{name = "Chris Markiewicz", email = "effigies@gmail.com"}]
-version = "1.2.0"
+version = "1.2.1.dev0"
 description = "Version numbering for anarchists and software realists"
 readme = "README.md"
 license = {file = "LICENSE"}
