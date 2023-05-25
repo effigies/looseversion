@@ -2,9 +2,10 @@
 
 ## Releases
 
-### 1.2.0 (Unreleased)
+### 1.2.0 (25 May 2023)
 
 - 2023.05.25
+  - Test on Python 3.12
   - Enable installation on Python 2+
   - Ensure consistent semantics between Python 2 and 3
 
