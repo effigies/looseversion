@@ -2,6 +2,12 @@
 
 ## Releases
 
+### 1.2.1 (5 Jul 2023)
+
+- 2023.07.05
+  - Restore Python 3 semantics for `LooseVersion`, creating `LooseVersion2`
+    to restore Python 2 semantics.
+
 ### 1.2.0 (25 May 2023)
 
 - 2023.05.25
