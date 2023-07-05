@@ -16,8 +16,9 @@ with warnings.catch_warnings():
 
 @pytest.mark.skipif(not have_distutils, reason="Needs distutils")
 @pytest.mark.parametrize("v1, v2", [("0.0.0", "0.0.0"), ("0.0.0", "1.0.0")])
-def test_LooseVersion_compat(v1, v2):
-    vend1, vend2 = lv.LooseVersion(v1), lv.LooseVersion(v2)
+@pytest.mark.parametrize("lvtype", [lv.LooseVersion, lv.LooseVersion2])
+def test_LooseVersion_compat(v1, v2, lvtype):
+    vend1, vend2 = lvtype(v1), lvtype(v2)
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         orig1, orig2 = dv.LooseVersion(v1), dv.LooseVersion(v2)
@@ -52,9 +53,10 @@ def test_LooseVersion_compat(v1, v2):
         ("1.13++", "5.5.kw", -1),
     ],
 )
-def test_cmp(v1, v2, result):
-    loosev1 = lv.LooseVersion(v1)
-    loosev2 = lv.LooseVersion(v2)
+@pytest.mark.parametrize("lvtype", [lv.LooseVersion, lv.LooseVersion2])
+def test_cmp(v1, v2, result, lvtype):
+    loosev1 = lvtype(v1)
+    loosev2 = lvtype(v2)
     assert loosev1._cmp(loosev2) == result
     assert loosev1._cmp(v2) == result
     assert loosev2._cmp(loosev1) == -result
@@ -73,10 +75,11 @@ def test_cmp(v1, v2, result):
         ("1.13++", [1, 13, "++"]),
     ],
 )
-def test_split(vstring, version):
+@pytest.mark.parametrize("lvtype", [lv.LooseVersion, lv.LooseVersion2])
+def test_split(vstring, version, lvtype):
     # Regression test to ensure we don't accidentally break parsing (again)
     # This can be changed if the version representation changes
-    v = lv.LooseVersion(vstring)
+    v = lvtype(vstring)
     assert v.vstring == vstring
     assert v.version == version
 
@@ -94,8 +97,8 @@ def test_py2_rules(v1, v2, result):
     """Python 2 did allow strings and numbers to be compared.
     Verify consistent, generally unintuitive behavior.
     """
-    loosev1 = lv.LooseVersion(v1)
-    loosev2 = lv.LooseVersion(v2)
+    loosev1 = lv.LooseVersion2(v1)
+    loosev2 = lv.LooseVersion2(v2)
     assert loosev1._cmp(loosev2) == result
     assert loosev1._cmp(v2) == result
     assert loosev2._cmp(loosev1) == -result

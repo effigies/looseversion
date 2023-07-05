@@ -179,7 +179,7 @@ class LooseVersion(object):
         components = [x for x in self.component_re.split(vstring) if x and x != "."]
         for i, obj in enumerate(components):
             try:
-                components[i] = _Py2Int(obj)
+                components[i] = int(obj)
             except ValueError:
                 pass
 
@@ -204,12 +204,12 @@ class LooseVersion(object):
             return 1
         return NotImplemented
 
-    @staticmethod
-    def _coerce(other):
-        if isinstance(other, LooseVersion):
+    @classmethod
+    def _coerce(cls, other):
+        if isinstance(other, cls):
             return other
         elif isinstance(other, str):
-            return LooseVersion(other)
+            return cls(other)
         elif "distutils" in sys.modules:
             # Using this check to avoid importing distutils and suppressing the warning
             try:
@@ -217,5 +217,27 @@ class LooseVersion(object):
             except ImportError:
                 return NotImplemented
             if isinstance(other, deprecated):
-                return LooseVersion(str(other))
+                return cls(str(other))
         return NotImplemented
+
+
+class LooseVersion2(LooseVersion):
+    """LooseVersion variant that restores Python 2 semantics
+
+    In Python 2, comparing LooseVersions where paired components could be string
+    and int always resulted in the string being "greater". In Python 3, this produced
+    a TypeError.
+    """
+    def parse(self, vstring):
+        # I've given up on thinking I can reconstruct the version string
+        # from the parsed tuple -- so I just store the string here for
+        # use by __str__
+        self.vstring = vstring
+        components = [x for x in self.component_re.split(vstring) if x and x != "."]
+        for i, obj in enumerate(components):
+            try:
+                components[i] = _Py2Int(obj)
+            except ValueError:
+                pass
+
+        self.version = components
