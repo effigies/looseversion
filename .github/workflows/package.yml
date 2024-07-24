@@ -16,9 +16,9 @@ jobs:
       matrix:
         python: [3]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python }}
     - name: Build package
@@ -26,7 +26,7 @@ jobs:
     - name: Check package metadata
       run: pipx run twine check dist/*
     - name: Save packages
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: dist
         path: dist/
@@ -44,9 +44,9 @@ jobs:
           - "3.12"
           - "pypy-3.7"
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python }}
         allow-prereleases: true
@@ -61,7 +61,7 @@ jobs:
     container:
       image: python:2.7-buster
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Install on 2.7
       run: pip install --upgrade pip setuptools pytest .
     - name: Test on 2.7
@@ -75,7 +75,7 @@ jobs:
       id-token: write
     steps:
     - name: Load packages
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: dist
         path: dist/
