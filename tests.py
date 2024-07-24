@@ -1,3 +1,4 @@
+import operator
 import sys
 import warnings
 
@@ -103,6 +104,35 @@ def test_py2_rules(v1, v2, result):
     assert loosev1._cmp(v2) == result
     assert loosev2._cmp(loosev1) == -result
     assert loosev2._cmp(v1) == -result
+
+
+def test_str():
+    assert str(lv.LooseVersion("1.2.3")) == "1.2.3"
+
+
+def test_repr():
+    assert repr(lv.LooseVersion("1.2.3")) == "LooseVersion ('1.2.3')"
+
+
+@pytest.mark.skipif(sys.version_info < (3,), reason="Needs py3.x")
+@pytest.mark.parametrize(
+    "op",
+    [
+        operator.lt,
+        operator.le,
+        operator.gt,
+        operator.ge,
+    ],
+)
+def test_invalid_comparison(op):
+    v1 = lv.LooseVersion("1")
+    v2 = 1
+    with pytest.raises(TypeError):
+        op(v1, v2)
+
+
+def test_equality_comparison():
+    assert lv.LooseVersion("1") != 1
 
 
 if __name__ == "__main__":
