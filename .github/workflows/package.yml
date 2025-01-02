@@ -53,6 +53,8 @@ jobs:
         allow-prereleases: true
     - name: Install tox
       run: pip install --upgrade pip tox tox-gh-actions
+    - name: Show tox config
+      run: tox c
     - name: Test
       run: tox
 
