@@ -12,24 +12,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python: [3]
+    permissions:
+      attestations: write
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python }}
-      uses: actions/setup-python@v5
+    - uses: hynek/build-and-inspect-python-package@v2
       with:
-        python-version: ${{ matrix.python }}
-    - name: Build package
-      run: pipx run build
-    - name: Check package metadata
-      run: pipx run twine check dist/*
-    - name: Save packages
-      uses: actions/upload-artifact@v4
-      with:
-        name: dist
-        path: dist/
+        attest-build-provenance-github: ${{ github.event_name != 'pull_request' }}
 
   test:
     runs-on: ubuntu-latest
@@ -76,14 +65,14 @@ jobs:
     needs: [build, test]
     runs-on: ubuntu-latest
     permissions:
-      # IMPORTANT: this permission is mandatory for trusted publishing
+      attestations: write
       id-token: write
     steps:
-    - name: Load packages
+    - name: Download packages built by build-and-inspect-python-package
       uses: actions/download-artifact@v4
       with:
-        name: dist
-        path: dist/
+        name: Packages
+        path: dist
     - name: Test PyPI upload
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
