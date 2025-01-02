@@ -10,7 +10,7 @@ have_distutils = True
 with warnings.catch_warnings():
     warnings.simplefilter("ignore")
     try:
-        from distutils import version as dv
+        from distutils import version as dv  # type: ignore[import-not-found]
     except ImportError:
         have_distutils = False
 
