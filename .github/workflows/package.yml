@@ -37,13 +37,18 @@ jobs:
           - "pypy-3.10"
     steps:
     - uses: actions/checkout@v4
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@v4
     - name: Set up Python ${{ matrix.python }}
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python }}
         allow-prereleases: true
     - name: Install tox
-      run: pip install --upgrade pip tox tox-gh-actions
+      run: |
+        # Use tox-uv if available, fall back to regular tox (py<3.8)
+        uv tool install --with=tox-uv --with=tox-gh-actions tox \
+          || uv tool install --with=tox-gh-actions tox
     - name: Show tox config
       run: tox c
     - name: Test
