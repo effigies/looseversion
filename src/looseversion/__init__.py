@@ -16,6 +16,7 @@ Every version number class implements the following interface:
     of the same class or a string (which will be parsed to an instance
     of the same class, thus must follow the same rules)
 """
+
 import re
 import sys
 
@@ -228,6 +229,7 @@ class LooseVersion2(LooseVersion):
     and int always resulted in the string being "greater". In Python 3, this produced
     a TypeError.
     """
+
     def parse(self, vstring):
         # I've given up on thinking I can reconstruct the version string
         # from the parsed tuple -- so I just store the string here for
