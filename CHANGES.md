@@ -2,6 +2,11 @@
 
 ## Releases
 
+### Upcoming (To be determined)
+
+- 2025.01.02
+  - Test on Python 3.13, updating CI infrastructure.
+
 ### 1.3.0 (5 Jul 2023)
 
 - 2023.07.05
