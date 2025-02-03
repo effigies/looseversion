@@ -12,24 +12,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python: [3]
+    permissions:
+      attestations: write
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python }}
-      uses: actions/setup-python@v5
+    - uses: hynek/build-and-inspect-python-package@v2
       with:
-        python-version: ${{ matrix.python }}
-    - name: Build package
-      run: pipx run build
-    - name: Check package metadata
-      run: pipx run twine check dist/*
-    - name: Save packages
-      uses: actions/upload-artifact@v4
-      with:
-        name: dist
-        path: dist/
+        attest-build-provenance-github: ${{ github.event_name != 'pull_request' }}
 
   test:
     runs-on: ubuntu-latest
@@ -42,16 +31,26 @@ jobs:
           - "3.10"
           - "3.11"
           - "3.12"
+          - "3.13"
           - "pypy-3.7"
+          - "pypy-3.9"
+          - "pypy-3.10"
     steps:
     - uses: actions/checkout@v4
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@v4
     - name: Set up Python ${{ matrix.python }}
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python }}
         allow-prereleases: true
     - name: Install tox
-      run: pip install --upgrade pip tox tox-gh-actions
+      run: |
+        # Use tox-uv if available, fall back to regular tox (py<3.8)
+        uv tool install --with=tox-uv --with=tox-gh-actions tox \
+          || uv tool install --with=tox-gh-actions tox
+    - name: Show tox config
+      run: tox c
     - name: Test
       run: tox
 
@@ -71,14 +70,14 @@ jobs:
     needs: [build, test]
     runs-on: ubuntu-latest
     permissions:
-      # IMPORTANT: this permission is mandatory for trusted publishing
+      attestations: write
       id-token: write
     steps:
-    - name: Load packages
+    - name: Download packages built by build-and-inspect-python-package
       uses: actions/download-artifact@v4
       with:
-        name: dist
-        path: dist/
+        name: Packages
+        path: dist
     - name: Test PyPI upload
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
