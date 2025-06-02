@@ -13,6 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
+      id-token: write
       attestations: write
     steps:
     - uses: actions/checkout@v4
@@ -25,7 +26,6 @@ jobs:
     strategy:
       matrix:
         python:
-          - "3.7"
           - "3.8"
           - "3.9"
           - "3.10"
@@ -46,17 +46,15 @@ jobs:
         allow-prereleases: true
     - name: Install tox
       run: |
-        # Use tox-uv if available, fall back to regular tox (py<3.8)
-        uv tool install --with=tox-uv --with=tox-gh-actions tox \
-          || uv tool install --with=tox-gh-actions tox
+        uv tool install --with=tox-uv --with=tox-gh-actions tox
     - name: Show tox config
       run: tox c
     - name: Test
       run: tox
 
   test-27:
-    name: Python 2.7 test on ubuntu-20.04
-    runs-on: ubuntu-20.04
+    name: Python 2.7 test on ubuntu-22.04
+    runs-on: ubuntu-22.04
     container:
       image: python:2.7-buster
     steps:
