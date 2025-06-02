@@ -26,7 +26,6 @@ jobs:
     strategy:
       matrix:
         python:
-          - "3.7"
           - "3.8"
           - "3.9"
           - "3.10"
@@ -47,9 +46,7 @@ jobs:
         allow-prereleases: true
     - name: Install tox
       run: |
-        # Use tox-uv if available, fall back to regular tox (py<3.8)
-        uv tool install --with=tox-uv --with=tox-gh-actions tox \
-          || uv tool install --with=tox-gh-actions tox
+        uv tool install --with=tox-uv --with=tox-gh-actions tox
     - name: Show tox config
       run: tox c
     - name: Test
