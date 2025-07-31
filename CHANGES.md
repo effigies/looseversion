@@ -4,6 +4,9 @@
 
 ### Upcoming (To be determined)
 
+- 2025.07.31
+  - Test on Python 3.14
+  - Update license metadata, per PEP 639
 - 2025.01.02
   - Test on Python 3.13, updating CI infrastructure.
 
