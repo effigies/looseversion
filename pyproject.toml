@@ -8,11 +8,10 @@ maintainers = [{name = "Chris Markiewicz", email = "effigies@gmail.com"}]
 version = "1.3.1.dev0"
 description = "Version numbering for anarchists and software realists"
 readme = "README.md"
-license = {file = "LICENSE"}
+license = "PSF-2.0"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Development Status :: 6 - Mature",
-    "License :: OSI Approved :: Python Software Foundation License",
 ]
 urls = {Homepage = "https://github.com/effigies/looseversion"}
 
