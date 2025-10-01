@@ -16,7 +16,7 @@ jobs:
       id-token: write
       attestations: write
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - uses: hynek/build-and-inspect-python-package@v2
       with:
         attest-build-provenance-github: ${{ github.event_name != 'pull_request' }}
@@ -37,11 +37,11 @@ jobs:
           - "pypy-3.9"
           - "pypy-3.10"
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v6
     - name: Set up Python ${{ matrix.python }}
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.python }}
         allow-prereleases: true
@@ -59,7 +59,7 @@ jobs:
     container:
       image: python:2.7-buster
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Install on 2.7
       run: pip install --upgrade pip setuptools pytest .
     - name: Test on 2.7
@@ -74,7 +74,7 @@ jobs:
       id-token: write
     steps:
     - name: Download packages built by build-and-inspect-python-package
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v5
       with:
         name: Packages
         path: dist
