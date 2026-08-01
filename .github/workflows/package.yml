@@ -17,7 +17,7 @@ jobs:
       attestations: write
     steps:
     - uses: actions/checkout@v6
-    - uses: hynek/build-and-inspect-python-package@v2
+    - uses: hynek/build-and-inspect-python-package@v2.18.0
       with:
         attest-build-provenance-github: ${{ github.event_name != 'pull_request' }}
 
